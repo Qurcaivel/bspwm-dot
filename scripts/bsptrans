@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+## Timestamp: 26.02.2023, 00:36 
+## Author:    Inqognitoo 
+## Mail:      alexinq6@gmail.com
+
+# this script make window opacity=100 or restore it to defaults
+picom-trans -c -t 100
+
+# this script make windows opacity=100 or restores it to default
+#for ID in $(xprop -root _NET_CLIENT_LIST | pcregrep -o1 '# (.*)' | sed 's/, /\n/g');
+#do
+#    (picom-trans -w ${ID} --toggle 100) > /dev/null 2>&1
+#done

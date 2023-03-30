@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+## ~~~ Create 2023 Inqognitoo <alexinq6@gmail.com>
+##
+## Script to launch telegram-desktop with properly file-chooser
+##
+## At:
+##     ~/.config/bspwm/sxhkdrc     - to open by hkey
+##     ~/.local/share/applications - to open in menu (NEEDS SCRIPT FOLDER IN PATH)
+
+XDG_CURRENT_DESKTOP=XFCE telegram-desktop &

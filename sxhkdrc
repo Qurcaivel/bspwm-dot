@@ -1,0 +1,165 @@
+## Copyright (C) 2020-2022 Aditya Shakya <adi1090x@gmail.com>
+##
+## ~~~ Edit 2023 Inqognitoo <alexinq6@gmail.com>
+#
+## Keybindings config for Archcraft's BSPWM
+
+##---------- Keybindings for bspwm ----------##
+
+# Terminal (alacritty)
+super + Return
+    bspterm
+
+##---------- Rofi Launcher & Menus ----------##
+
+# Rofi App Launcher
+alt + F1
+	rofi_launcher
+
+# Rofi Run
+alt + F2
+	rofi_runner
+
+# Rofi Menus/Applets
+super + {n,x}
+    {nmd,rofi_powermenu}
+
+##---------- Applications ----------##
+
+# Launch apps
+super + {d,w,e,r}
+    {thunar,firefox,code,atril}
+
+# Telegram
+super + t
+    bsptelegram
+
+# Music
+#super + m
+#    bspmusic
+
+# Launch terminal apps
+super + ctrl + e
+    alacritty --config-file ~/.config/lvim/alacritty.yml -e lvim
+
+super + ctrl + d
+    alacritty --config-file ~/.config/bspwm/alacritty/alacritty.yml -e ranger
+
+# Color Picker
+super + p
+	bspcolorpicker
+
+# Lockscreen
+super + l
+    betterlockscreen --lock
+
+##---------- System Keys ----------##
+
+# Take a screenshot
+Print
+	bspscreenshot --now
+	
+# Take screenshot in 5 second
+alt + Print	
+	bspscreenshot --in5
+
+# Take screenshot in 10 second
+shift + Print	
+	bspscreenshot --in10
+
+# Take screenshot of active window
+ctrl + Print
+	bspscreenshot --win
+
+# Take screenshot of area
+super + Print
+	bspscreenshot --area
+
+super + shift + s
+    bspscreenshot --area
+
+# Brightness control
+XF86MonBrightness{Up,Down}
+	bspbrightness{ --inc, --dec}
+	
+# Speaker Volume control
+XF86Audio{RaiseVolume,LowerVolume}
+	bspvolume{ --inc, --dec}
+
+# Mic Volume control
+XF86Audio{Mute,MicMute}
+	bspvolume{ --toggle, --toggle-mic}
+	
+# Music control
+#XF86Audio{Next,Prev,Play,Stop}
+#	mpc {next,prev,toggle,stop}
+
+##---------- Bspwm ----------##
+
+# Hide/Unhide Window
+super + h
+    bspwinmask
+
+# Close App
+super + c
+    bspc node -c
+
+# kill window
+ctrl + alt + Escape
+    xkill
+
+# Quit/Restart bspwm
+ctrl + shift + {q,r}
+	bspc {quit,wm -r}
+	
+# Reload Keybindings
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# Switch workspace or Send focused Node to another workspace
+super + {_,shift + }{1-8}
+	bspc {desktop -f,node -d} '^{1-8}' '--follow'
+
+# Change focus of the Node or Swap Nodes
+super + {_,shift + }{Left,Down,Up,Right}
+	bspc node -{f,s} {west,south,north,east}
+
+# Move floating windows
+#super + alt + shift + {Left,Down,Up,Right}
+#	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Expanding windows
+super + control + {Left,Right,Up,Down}
+	bspc node -z {left -20 0,right 20 0,top 0 -20,bottom 0 20}
+	
+# Shrinking windows
+super + alt + {Left,Right,Up,Down}
+    bspc node -z {right -20 0,left 20 0,bottom 0 -20,top 0 20}
+
+# Split horizontal or cancel
+#super + {s,q}
+#    bspc node -p {east,cancel}
+
+# Toggle Fullscreen
+super + f
+    bspc node -t "~"fullscreen
+
+# Toggle beetwen floating & tiled
+super + space
+    bspc node -t "~"{floating,tiled}
+
+# Pseudo Tiled & tiled mode
+super + shift + space
+    bspc node -t "~"{pseudo_tiled,tiled}
+
+# Switch to last opened workspace
+super + {Tab,grave}
+	bspc {node,desktop} -f last
+
+##--------- Picom ---------##
+
+# Switch between transparent and opaque mode
+super + o
+    bsptrans
+
+##---------- EOF ----------##

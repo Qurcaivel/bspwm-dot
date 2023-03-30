@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Kill active processes
+killall -9 xsettingsd sxhkd dunst ksuperkey xfce4-power-manager bspc telegram-desktop
+
+# Lauch xsettingsd daemon
+xsettingsd --config="$HOME"/.config/bspwm/xsettingsd &
+
+# Polkit agent
+if [[ ! `pidof xfce-polkit` ]]; then
+	/usr/lib/xfce-polkit/xfce-polkit &
+fi
+
+# Lauch keybindings daemon
+sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
+
+# Enable super keys for rofi
+ksuperkey -e 'Super_L=Alt_L|F1' &
+ksuperkey -e 'Super_R=Alt_L|F1' &
+
+# Enable power management
+xfce4-power-manager &
+
+# Libinput-gestures setup
+libinput-gestures-setup start &
+
+# Fix cursor
+xsetroot -cursor_name left_ptr
+
+# Set keyboard layout switch
+setxkbmap -option grp:alt_shift_toggle us,ru &
+
+# Restore wallpaper
+bash ~/.fehbg
+
+# Start mpd
+exec mpd &
+
+# Start bspwm scripts
+bspbar
+bspcomp
+bspdunst
