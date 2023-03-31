@@ -1,4 +1,6 @@
 ## Copyright (C) 2020-2022 Aditya Shakya <adi1090x@gmail.com>
+##
+## ~~ Edit 2023 Inqognitoo <alexinq6@gmail.com>
 
 [global]
 monitor = 0
@@ -8,7 +10,7 @@ width = 320
 height = 320
 origin = top-right
 offset = 14x46
-corner_radius = 12
+corner_radius = 12 # must be equal to picom corner-radius
 scale = 0
 
 notification_limit = 0
@@ -27,7 +29,7 @@ separator_height = 1
 padding = 15
 horizontal_padding = 15
 text_icon_padding = 0
-frame_width = 1 #1
+frame_width = 1
 gap_size = 4
 
 separator_color = frame

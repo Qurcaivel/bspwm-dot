@@ -31,7 +31,7 @@ xsetroot -cursor_name left_ptr
 setxkbmap -option grp:alt_shift_toggle us,ru &
 
 # Restore wallpaper
-bash ~/.fehbg
+feh --no-fehbg --bg-fill --randomize /home/inqognitoo/.config/bspwm/.images/*
 
 # Start mpd
 exec mpd &

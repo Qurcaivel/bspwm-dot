@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+## ~~ Create 2023 Inqognitoo <alexinq6@gmail.com>
+##
+## Bspwm master script.
+
 for script in "$HOME"/.config/bspwm/config.d/*; do
     . $script
 done

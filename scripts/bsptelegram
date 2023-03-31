@@ -2,10 +2,10 @@
 
 ## ~~~ Create 2023 Inqognitoo <alexinq6@gmail.com>
 ##
-## Script to launch telegram-desktop with properly file-chooser
+## Script to launch telegram-desktop properly.
 ##
 ## At:
-##     ~/.config/bspwm/sxhkdrc     - to open by hkey
-##     ~/.local/share/applications - to open in menu (NEEDS SCRIPT FOLDER IN PATH)
+##     ~/.config/bspwm/sxhkdrc
+##     ~/.local/share/applications/org.telegram.desktop.desktop
 
 XDG_CURRENT_DESKTOP=XFCE telegram-desktop &

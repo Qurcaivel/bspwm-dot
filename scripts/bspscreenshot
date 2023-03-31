@@ -4,7 +4,7 @@
 ##  
 ## ~~~ Edit 2023 Inqognitoo <alexinq6@gmail.com>
 ##
-## Script to take screenshots on Archcraft.
+## Script to take screenshots.
 
 # geometry
 geometry=`xrandr | grep 'current' | head -n1 | cut -d',' -f2 | tr -d '[:blank:],current'`

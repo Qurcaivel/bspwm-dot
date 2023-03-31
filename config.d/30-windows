@@ -12,7 +12,6 @@ declare -a floating=(
     Pavucontrol 
     Blueman-manager 
     Viewnior 
-    feh
     MPlayer
     Nm-connection-editor 
     Xarchiver 
@@ -21,6 +20,7 @@ declare -a floating=(
     Toolkit 
     firefox:Toolkit
     Rhythmbox
+    ru-turikhay-tlauncher-bootstrap-Bootstrap
 )
 
 for i in ${floating[@]}; do
