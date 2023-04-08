@@ -37,6 +37,3 @@ bspc config paddingless_monocle true
 bspc config single_monocle false
 bspc config focus_follows_pointer true
 bspc config presel_feedback true
-
-# Manage windows from a previous session
-bspc wm --adopt-orphans

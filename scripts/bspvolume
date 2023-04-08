@@ -11,12 +11,12 @@ iDIR='/usr/share/archcraft/icons/dunst'
 notify_cmd='dunstify -u low -h string:x-dunst-stack-tag:obvolume'
 
 # Get Volume
-get_volume() {
+get_volume(){
 	echo "`pulsemixer --get-volume | cut -d' ' -f1`"
 }
 
 # Get icons
-get_icon() {
+get_icon(){
 	current="$(get_volume)"
 	if [[ "$current" -eq "0" ]]; then
 		icon="$iDIR/volume-mute.png"
@@ -51,7 +51,8 @@ toggle_mute() {
 	if [[ `pulsemixer --get-mute` == 0 ]]; then
 		pulsemixer --toggle-mute && ${notify_cmd} -i "$iDIR/volume-mute.png" "Mute"
 	else
-		pulsemixer --toggle-mute && get_icon && ${notify_cmd} -i "$icon" "Unmute"
+		#pulsemixer --toggle-mute && get_icon && ${notify_cmd} -i "$icon" "Unmute"
+        pulsemixer --toggle-mute && get_icon && notify_user
 	fi
 }
 

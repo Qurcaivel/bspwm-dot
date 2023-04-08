@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Autostart telegram
+if [[ ! `pidof telegram-desktop` ]]; then
+    bsptelegram --autostart
+fi

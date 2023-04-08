@@ -1,4 +1,4 @@
-# Launch the bar
+#!/usr/bin/env bash
 
 CFG="$HOME/.config/bspwm/polybar/config.ini"
 
@@ -8,7 +8,7 @@ killall -q polybar
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-# Launch the bar
-for mon in $(polybar --list-monitors | cut -d":" -f1); do
-	MONITOR=$mon polybar -q main -c $CFG &
-done
+# Launch polybar
+polybar left -c $CFG &
+polybar right -c $CFG &
+polybar tray -c $CFG &

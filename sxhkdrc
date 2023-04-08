@@ -16,9 +16,8 @@ super + Return
 alt + F1
 	rofi_launcher
 
-# Rofi Run
-alt + F2
-	rofi_runner
+alt + Tab
+    rofi_windows
 
 # Rofi Menus/Applets
 super + {n,x}
@@ -28,15 +27,11 @@ super + {n,x}
 
 # Launch apps
 super + {d,w,e,r}
-    {thunar,firefox,code,atril}
+    {thunar,firefox,code,evince}
 
 # Telegram
 super + t
     bsptelegram
-
-# Music
-#super + m
-#    bspmusic
 
 # Launch terminal apps
 super + ctrl + e
@@ -89,10 +84,6 @@ XF86Audio{RaiseVolume,LowerVolume}
 # Mic Volume control
 XF86Audio{Mute,MicMute}
 	bspvolume{ --toggle, --toggle-mic}
-	
-# Music control
-#XF86Audio{Next,Prev,Play,Stop}
-#	mpc {next,prev,toggle,stop}
 
 ##---------- Bspwm ----------##
 
@@ -124,10 +115,6 @@ super + {_,shift + }{1-8}
 super + {_,shift + }{Left,Down,Up,Right}
 	bspc node -{f,s} {west,south,north,east}
 
-# Move floating windows
-#super + alt + shift + {Left,Down,Up,Right}
-#	bspc node -v {-20 0,0 20,0 -20,20 0}
-
 # Expanding windows
 super + control + {Left,Right,Up,Down}
 	bspc node -z {left -20 0,right 20 0,top 0 -20,bottom 0 20}
@@ -135,10 +122,6 @@ super + control + {Left,Right,Up,Down}
 # Shrinking windows
 super + alt + {Left,Right,Up,Down}
     bspc node -z {right -20 0,left 20 0,bottom 0 -20,top 0 20}
-
-# Split horizontal or cancel
-#super + {s,q}
-#    bspc node -p {east,cancel}
 
 # Toggle Fullscreen
 super + f

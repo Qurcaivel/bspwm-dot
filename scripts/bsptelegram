@@ -8,4 +8,10 @@
 ##     ~/.config/bspwm/sxhkdrc
 ##     ~/.local/share/applications/org.telegram.desktop.desktop
 
-XDG_CURRENT_DESKTOP=XFCE telegram-desktop &
+if [[ "$1" == "--autostart" ]]; then
+    ARG="-startintray"
+else
+    ARG=""
+fi
+
+XDG_CURRENT_DESKTOP=XFCE telegram-desktop "$ARG" &

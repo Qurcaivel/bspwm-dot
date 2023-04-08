@@ -8,16 +8,12 @@ bspc config pointer_motion_interval 5
 
 ## Floating apps
 declare -a floating=(
-    Thunar 
+    #Thunar 
     Pavucontrol 
     Blueman-manager 
-    Viewnior 
-    MPlayer
     Nm-connection-editor 
     Xarchiver 
-    Music 
     GParted 
-    Toolkit 
     firefox:Toolkit
     Rhythmbox
     ru-turikhay-tlauncher-bootstrap-Bootstrap
@@ -27,11 +23,5 @@ for i in ${floating[@]}; do
    bspc rule -a $i state=floating focus=on center=true; 
 done
 
-# Virtualbox overhead
-#bspc rule -a "VirtualBox" state=floating center=true rectangle=1000x600+0+0 layer=normal
-#bspc rule -a "VirtualBox Manager" state=floating center=true rectangle=1000x600+0+0 layer=below
-#bspc rule -a "VirtualBox Machine" state=floating focus=on layer=above
-
-# Open in certain desktop
-bspc rule -a TelegramDesktop desktop='^8' follow=true
-bspc rule -a discord desktop='^7' follow=true
+# TelegramDesktop preview mode
+#bspc rule -a "TelegramDesktop:telegram-desktop" state=floating focus=on center=true rectangle=750x850+0+0

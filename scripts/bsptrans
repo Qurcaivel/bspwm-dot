@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-## ~~~ Create 2023 Inqognitoo <alexinq6@gmail.com>
-##
-## Disable window custom opacity.
-
-picom-trans -c -t 100
