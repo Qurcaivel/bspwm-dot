@@ -17,6 +17,7 @@ declare -a floating=(
     firefox:Toolkit
     Rhythmbox
     ru-turikhay-tlauncher-bootstrap-Bootstrap
+    Cheese
 )
 
 for i in ${floating[@]}; do

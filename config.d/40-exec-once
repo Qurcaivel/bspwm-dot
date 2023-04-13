@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Kill active processes
-killall -9 xsettingsd sxhkd dunst ksuperkey xfce4-power-manager bspc
+killall -9 xsettingsd sxhkd dunst ksuperkey xss-lock bspc
 
 # Lauch xsettingsd daemon
 xsettingsd --config="$HOME"/.config/bspwm/xsettingsd &
@@ -17,8 +17,10 @@ sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
 # Enable super keys for rofi
 ksuperkey -e 'Super_L=Alt_L|F1' &
 
-# Enable power management
-xfce4-power-manager &
+# Enable lock screen hd
+# note: it needs lid lock rules at /etc/systemd/logind*
+#
+xss-lock -- betterlockscreen --suspend &
 
 # Libinput-gestures setup
 libinput-gestures-setup start &
