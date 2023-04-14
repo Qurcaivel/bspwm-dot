@@ -31,7 +31,7 @@ super + {d,w,e,r}
 
 # Telegram
 super + t
-    bsptelegram
+    telegram-desktop
 
 # Launch terminal apps
 super + ctrl + e

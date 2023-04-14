@@ -2,5 +2,5 @@
 
 # Autostart telegram
 if [[ ! `pidof telegram-desktop` ]]; then
-    bsptelegram --autostart
+    /usr/bin/telegram-desktop -startintray
 fi
