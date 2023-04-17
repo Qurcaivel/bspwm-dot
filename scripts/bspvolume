@@ -6,81 +6,90 @@
 ##
 ## Script to manage speaker volume on Archcraft.
 
-# Icons
-iDIR='/usr/share/archcraft/icons/dunst'
-notify_cmd='dunstify -u low -h string:x-dunst-stack-tag:obvolume'
+icons='/usr/share/archcraft/icons/dunst'
+message='dunstify -u low -h string:x-dunst-stack-tag:obvolume'
 
-# Get Volume
-get_volume(){
-	echo "`pulsemixer --get-volume | cut -d' ' -f1`"
+get_status(){
+    local string=( "`wpctl get-volume @DEFAULT_AUDIO_SINK@`" )
+    local status=( $string )
+
+    volume=$(printf "%.0f" $(echo "${status[1]} * 100" | bc -l))
+    clatch=$(expr ${#status[@]} == 3)
 }
 
-# Get icons
+get_mic_status(){
+    local string=( "`wpctl get-volume @DEFAULT_AUDIO_SOURCE@`" )
+    local status=( $string )
+
+    clatch=$(expr ${#status[@]} == 3)
+}
+
 get_icon(){
-	current="$(get_volume)"
-	if [[ "$current" -eq "0" ]]; then
-		icon="$iDIR/volume-mute.png"
-	elif [[ ("$current" -ge "0") && ("$current" -le "30") ]]; then
-		icon="$iDIR/volume-low.png"
-	elif [[ ("$current" -ge "30") && ("$current" -le "60") ]]; then
-		icon="$iDIR/volume-mid.png"
-	elif [[ ("$current" -ge "60") && ("$current" -le "100") ]]; then
-		icon="$iDIR/volume-high.png"
-	fi
+    get_status
+    if [[ "$volume" -ge 60 ]]; then
+        icon="$icons/volume-high.png"
+    elif [[ "$volume" -ge 30 ]]; then
+        icon="$icons/volume-mid.png"
+    elif [[ "$volume" -gt 00 ]]; then
+        icon="$icons/volume-low.png"
+    else
+        icon="$icons/volume-mute.png"
+    fi
 }
 
-# Notify
-notify_user() {
-	${notify_cmd} -i "$icon" "Volume : $(get_volume)%"
+send_message(){
+    get_icon
+    ${message} -i "$icon" "Volume: $volume%"
+
 }
 
-# Increase Volume
-inc_volume() {
-	[[ `pulsemixer --get-mute` == 1 ]] && pulsemixer --unmute
-	pulsemixer --max-volume 100 --change-volume +5 && get_icon && notify_user
+inc_volume(){
+    get_status
+    if [[ $clatch -eq 1 ]]; then
+        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    fi
+    wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+
+    send_message
 }
 
-# Decrease Volume
-dec_volume() {
-	[[ `pulsemixer --get-mute` == 1 ]] && pulsemixer --unmute
-	pulsemixer --max-volume 100 --change-volume -5 && get_icon && notify_user
+dec_volume(){
+    get_status
+    if [[ $clatch -eq 1 ]]; then
+        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    fi
+    wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%-
+    send_message
 }
 
-# Toggle Mute
-toggle_mute() {
-	if [[ `pulsemixer --get-mute` == 0 ]]; then
-		pulsemixer --toggle-mute && ${notify_cmd} -i "$iDIR/volume-mute.png" "Mute"
+toggle_volume(){
+    get_status
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    if [[ $clatch -eq 1 ]]; then
+        send_message
+    else
+        ${message} -i "$icons/volume-mute.png" "Mute"
+    fi
+}
+
+toggle_mic(){
+    get_mic_status
+    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+    if [[ $clatch -eq 1 ]]; then
+ 		${message} -i "$icons/microphone-mute.png" "Microphone switched OFF"
+        light -Srs "sysfs/leds/platform::micmute" 1
 	else
-		#pulsemixer --toggle-mute && get_icon && ${notify_cmd} -i "$icon" "Unmute"
-        pulsemixer --toggle-mute && get_icon && notify_user
+	    ${message} -i "$icons/microphone.png" "Microphone switched ON" 
+        light -Srs "sysfs/leds/platform::micmute" 0
 	fi
 }
 
-# Toggle Mic
-toggle_mic() {
-	ID="`pulsemixer --list-sources | grep 'Default' | cut -d',' -f1 | cut -d' ' -f3`"
-	if [[ `pulsemixer --id $ID --get-mute` == 0 ]]; then
-		pulsemixer --id ${ID} --toggle-mute && ${notify_cmd} -i "$iDIR/microphone-mute.png" "Microphone Switched OFF" && light -Srs "sysfs/leds/platform::micmute" 1
-	else
-		pulsemixer --id ${ID} --toggle-mute && ${notify_cmd} -i "$iDIR/microphone.png" "Microphone Switched ON" && light -Srs "sysfs/leds/platform::micmute" 0
-	fi
-}
-
-# Execute accordingly
-if [[ -x `which pulsemixer` ]]; then
-	if [[ "$1" == "--get" ]]; then
-		get_volume
-	elif [[ "$1" == "--inc" ]]; then
-		inc_volume
-	elif [[ "$1" == "--dec" ]]; then
-		dec_volume
-	elif [[ "$1" == "--toggle" ]]; then
-		toggle_mute
-	elif [[ "$1" == "--toggle-mic" ]]; then
-		toggle_mic
-	else
-		echo $(get_volume)%
-	fi
-else
-	${notify_cmd} "'pulsemixer' is not installed."
+if [[ "$1" == "--inc" ]]; then
+    inc_volume
+elif [[ $1 == "--dec" ]]; then
+    dec_volume
+elif [[ $1 == "--toggle" ]]; then
+    toggle_volume
+elif [[ $1 == "--toggle-mic" ]]; then
+    toggle_mic
 fi
+

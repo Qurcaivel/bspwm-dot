@@ -75,11 +75,11 @@ super + shift + s
 
 # Brightness control
 XF86MonBrightness{Up,Down}
-	bspbrightness{ --inc, --dec}
+    bspbrightness{ --inc, --dec}
 	
 # Speaker Volume control
 XF86Audio{RaiseVolume,LowerVolume}
-	bspvolume{ --inc, --dec}
+    bspvolume{ --inc, --dec}
 
 # Mic Volume control
 XF86Audio{Mute,MicMute}
@@ -94,10 +94,6 @@ super + h
 # Close App
 super + c
     bspc node -c
-
-# kill window
-ctrl + alt + Escape
-    xkill
 
 # Quit/Restart bspwm
 ctrl + shift + {q,r}
@@ -138,11 +134,5 @@ super + shift + space
 # Switch to last opened workspace
 super + {Tab,grave}
 	bspc {node,desktop} -f last
-
-##--------- Picom ---------##
-
-# Switch between transparent and opaque mode
-super + o
-    bsptrans
 
 ##---------- EOF ----------##

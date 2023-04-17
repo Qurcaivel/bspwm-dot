@@ -8,7 +8,6 @@ bspc config pointer_motion_interval 5
 
 ## Floating apps
 declare -a floating=(
-    #Thunar 
     Pavucontrol 
     Blueman-manager 
     Nm-connection-editor 
@@ -24,5 +23,5 @@ for i in ${floating[@]}; do
    bspc rule -a $i state=floating focus=on center=true; 
 done
 
-# TelegramDesktop preview mode
-#bspc rule -a "TelegramDesktop:telegram-desktop" state=floating focus=on center=true rectangle=750x850+0+0
+# Zathura (!)
+bspc rule -a Zathura state=tiled
