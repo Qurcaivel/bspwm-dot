@@ -11,6 +11,9 @@ if [[ ! `pidof xfce-polkit` ]]; then
 	/usr/lib/xfce-polkit/xfce-polkit &
 fi
 
+# Set keyboard layout switch
+setxkbmap -option grp:alt_shift_toggle us,ru &
+
 # Lauch keybindings daemon
 sxhkd -c "$HOME"/.config/bspwm/sxhkdrc &
 
@@ -27,9 +30,6 @@ libinput-gestures-setup start &
 
 # Fix cursor
 xsetroot -cursor_name left_ptr
-
-# Set keyboard layout switch
-setxkbmap -option grp:alt_shift_toggle us,ru &
 
 # Restore wallpaper
 feh --no-fehbg --bg-fill /home/inqognitoo/.config/bspwm/.images/evening-sky.png

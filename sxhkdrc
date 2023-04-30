@@ -27,18 +27,14 @@ super + {n,x}
 
 # Launch apps
 super + {d,w,e,r}
-    {thunar,firefox,code,evince}
+    {thunar,firefox,code,atril}
 
 # Telegram
 super + t
     telegram-desktop
 
-# Launch terminal apps
-super + ctrl + e
-    alacritty --config-file ~/.config/lvim/alacritty.yml -e lvim
-
 super + ctrl + d
-    alacritty --config-file ~/.config/bspwm/alacritty/alacritty.yml -e ranger
+    bspterm -e ranger
 
 # Color Picker
 super + p
@@ -76,7 +72,7 @@ super + shift + s
 # Brightness control
 XF86MonBrightness{Up,Down}
     bspbrightness{ --inc, --dec}
-	
+
 # Speaker Volume control
 XF86Audio{RaiseVolume,LowerVolume}
     bspvolume{ --inc, --dec}

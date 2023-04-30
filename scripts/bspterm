@@ -10,4 +10,4 @@
 DIR="$HOME/.config/bspwm"
 CONFIG="$DIR/alacritty/alacritty.yml"
 
-alacritty --config-file "$CONFIG"
+alacritty --config-file "$CONFIG" "$@"

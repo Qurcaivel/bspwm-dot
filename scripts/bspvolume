@@ -7,79 +7,70 @@
 ## Script to manage speaker volume on Archcraft.
 
 icons='/usr/share/archcraft/icons/dunst'
-message='dunstify -u low -h string:x-dunst-stack-tag:obvolume'
+message='notify-send -u low -h string:x-dunst-stack-tag:obvolume'
 
-get_status(){
-    local string=( "`wpctl get-volume @DEFAULT_AUDIO_SINK@`" )
-    local status=( $string )
-
-    volume=$(printf "%.0f" $(echo "${status[1]} * 100" | bc -l))
-    clatch=$(expr ${#status[@]} == 3)
+get_volume(){
+    echo "$(pamixer --get-volume)"
 }
 
-get_mic_status(){
-    local string=( "`wpctl get-volume @DEFAULT_AUDIO_SOURCE@`" )
-    local status=( $string )
+get_mute(){
+    echo "$(pamixer --get-mute)"
+}
 
-    clatch=$(expr ${#status[@]} == 3)
+get_micmute(){
+    echo "$(pamixer --default-source --get-mute)"
 }
 
 get_icon(){
-    get_status
+    volume=$(get_volume)
     if [[ "$volume" -ge 60 ]]; then
-        icon="$icons/volume-high.png"
+        echo "$icons/volume-high.png"
     elif [[ "$volume" -ge 30 ]]; then
-        icon="$icons/volume-mid.png"
-    elif [[ "$volume" -gt 00 ]]; then
-        icon="$icons/volume-low.png"
+        echo "$icons/volume-mid.png"
+    elif [[ "$volume" -gt 0 ]]; then
+        echo "$icons/volume-low.png"
     else
-        icon="$icons/volume-mute.png"
+        echo "$icons/volume-mute.png"
     fi
 }
 
 send_message(){
-    get_icon
-    ${message} -i "$icon" "Volume: $volume%"
-
+    ${message} -i $(get_icon) "Volume: $(get_volume)%"
 }
 
 inc_volume(){
-    get_status
-    if [[ $clatch -eq 1 ]]; then
-        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    if [[ $(get_mute) == "true" ]]; then
+        pamixer -u
     fi
-    wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+
+    pamixer -i 2 && 
     send_message
 }
 
 dec_volume(){
-    get_status
-    if [[ $clatch -eq 1 ]]; then
-        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    if [[ $(get_mute) == "true" ]]; then
+        pamixer -u
     fi
-    wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%-
+    pamixer -d 2 &&
     send_message
 }
 
 toggle_volume(){
-    get_status
-    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-    if [[ $clatch -eq 1 ]]; then
+    if [[ $(get_mute) == "true" ]]; then
+        pamixer -u &&
         send_message
     else
+        pamixer -m &&
         ${message} -i "$icons/volume-mute.png" "Mute"
     fi
 }
 
 toggle_mic(){
-    get_mic_status
-    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-    if [[ $clatch -eq 1 ]]; then
- 		${message} -i "$icons/microphone-mute.png" "Microphone switched OFF"
-        light -Srs "sysfs/leds/platform::micmute" 1
+    if [[ $(get_micmute) == "true" ]]; then
+        pamixer --default-source -u &&
+ 		${message} -i "$icons/microphone-mute.png" "Microphone switched ON"
 	else
-	    ${message} -i "$icons/microphone.png" "Microphone switched ON" 
-        light -Srs "sysfs/leds/platform::micmute" 0
+        pamixer --default-source -m &&
+	    ${message} -i "$icons/microphone.png" "Microphone switched OFF" 
 	fi
 }
 
@@ -91,5 +82,6 @@ elif [[ $1 == "--toggle" ]]; then
     toggle_volume
 elif [[ $1 == "--toggle-mic" ]]; then
     toggle_mic
+else
+    get_volume
 fi
-
