@@ -67,10 +67,10 @@ toggle_volume(){
 toggle_mic(){
     if [[ $(get_micmute) == "true" ]]; then
         pamixer --default-source -u &&
- 		${message} -i "$icons/microphone-mute.png" "Microphone switched ON"
+ 		${message} -i "$icons/microphone.png" "Microphone switched ON"
 	else
         pamixer --default-source -m &&
-	    ${message} -i "$icons/microphone.png" "Microphone switched OFF" 
+	    ${message} -i "$icons/microphone-mute.png" "Microphone switched OFF" 
 	fi
 }
 

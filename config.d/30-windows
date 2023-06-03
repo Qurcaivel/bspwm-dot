@@ -15,6 +15,7 @@ declare -a floating=(
     GParted 
     Rhythmbox
     ru-turikhay-tlauncher-bootstrap-Bootstrap
+    com-cburch-logisim-Main
 )
 
 for i in ${floating[@]}; do

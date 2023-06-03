@@ -29,7 +29,7 @@ separator_height = 1
 padding = 15
 horizontal_padding = 15
 text_icon_padding = 0
-frame_width = 1
+frame_width = 2
 gap_size = 4
 
 separator_color = frame
