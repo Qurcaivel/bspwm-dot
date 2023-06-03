@@ -9,6 +9,6 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch polybar
-polybar left -c $CFG &
-polybar right -c $CFG &
-polybar tray -c $CFG &
+for mon in $(polybar --list-monitors | cut -d":" -f1); do
+	MONITOR=$mon polybar -q main -c $CFG &
+done
