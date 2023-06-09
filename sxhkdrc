@@ -6,100 +6,83 @@
 
 ##---------- Keybindings for bspwm ----------##
 
-# Terminal (alacritty)
 super + Return
     bspterm
 
 ##---------- Rofi Launcher & Menus ----------##
 
-# Rofi App Launcher
 alt + F1
 	rofi_launcher
 
 alt + Tab
     rofi_windows
 
-# Rofi Menus/Applets
 super + {n,x}
     {nmd,rofi_powermenu}
 
 ##---------- Applications ----------##
 
-# Launch apps
 super + {d,w,e,r}
     {thunar,firefox,code,atril}
-
-# Telegram
-super + t
-    telegram-desktop
 
 super + ctrl + d
     bspterm -e ranger
 
-# Color Picker
+super + ctrl + r
+    zathura
+
+super + t
+    telegram-desktop
+
 super + p
 	bspcolorpicker
 
-# Lockscreen
 super + l
     betterlockscreen --lock
 
 ##---------- System Keys ----------##
 
-# Take a screenshot
 Print
 	bspscreenshot --now
 	
-# Take screenshot in 5 second
 alt + Print	
 	bspscreenshot --in5
 
-# Take screenshot in 10 second
 shift + Print	
 	bspscreenshot --in10
 
-# Take screenshot of active window
 ctrl + Print
 	bspscreenshot --win
 
-# Take screenshot of area
 super + Print
 	bspscreenshot --area
 
 super + shift + s
     bspscreenshot --area
 
-# Brightness control
 XF86MonBrightness{Up,Down}
     bspbrightness{ --inc, --dec}
 
-# Speaker Volume control
 XF86Audio{RaiseVolume,LowerVolume}
     bspvolume{ --inc, --dec}
 
-# Mic Volume control
 XF86Audio{Mute,MicMute}
 	bspvolume{ --toggle, --toggle-mic}
 
 ##---------- Bspwm ----------##
 
-# Hide/Unhide Window
 super + h
     bspwinmask
 
-# Close App
 super + c
     bspc node -c
 
-# Quit/Restart bspwm
 ctrl + shift + {q,r}
 	bspc {quit,wm -r}
 	
-# Reload Keybindings
 super + Escape
 	pkill -USR1 -x sxhkd
 
-# Switch workspace or Send focused Node to another workspace
 super + {_,shift + }{1-8}
 	bspc {desktop -f,node -d} '^{1-8}' '--follow'
 
@@ -115,19 +98,16 @@ super + control + {Left,Right,Up,Down}
 super + alt + {Left,Right,Up,Down}
     bspc node -z {right -20 0,left 20 0,bottom 0 -20,top 0 20}
 
-# Toggle Fullscreen
 super + f
     bspc node -t "~"fullscreen
 
-# Toggle beetwen floating & tiled
 super + space
     bspc node -t "~"{floating,tiled}
 
-# Pseudo Tiled & tiled mode
 super + shift + space
     bspc node -t "~"{pseudo_tiled,tiled}
 
-# Switch to last opened workspace
+# Switch to the last opened window or workspace
 super + {Tab,grave}
 	bspc {node,desktop} -f last
 
